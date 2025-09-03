@@ -1,3 +1,6 @@
+# ==========================================================
+# Workflow 1: Jalankan preprocessing & training
+# ==========================================================
 name: Run Preprocessing & Train
 
 on:
@@ -32,18 +35,59 @@ jobs:
       - name: Run Train models 
         run: |
           python src/train.py
-      
+
+      - name: Upload report_site as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: report_site
+          path: report_site/
+
+# ==========================================================
+# Workflow 2: Deploy ke GitHub Pages
+# ==========================================================
+name: Deploy static content to Pages
+
+on:
+  workflow_run:
+    workflows: ["Run Preprocessing & Train"]
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download report_site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: report_site
+          path: report_site
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: report_site  
+          path: report_site
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-          
-
-
