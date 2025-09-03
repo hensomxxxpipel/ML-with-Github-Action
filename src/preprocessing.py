@@ -20,4 +20,4 @@ clean_path = clean_dir / "clean_car_evaluation.csv"
 
 df.to_csv(clean_path, index=False, encoding="utf-8")
 
-print("Preprocessing Berhasil Loh Ya")
+print("Preprocessing Berhasil Loh Yaa")
