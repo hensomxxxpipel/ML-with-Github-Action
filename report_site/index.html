@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Reports</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Machine Learning Model Reports</h1>
+    
+    <section class="report">
+      <h2>Support Vector Machine (SVM)</h2>
+      <pre id="svm-report">Loading...</pre>
+    </section>
+
+    <section class="report">
+      <h2>Naive Bayes (NB)</h2>
+      <pre id="nb-report">Loading...</pre>
+    </section>
+  </div>
+
+  <script>
+    async function loadReport(file, elementId) {
+      try {
+        const res = await fetch(file);
+        if (!res.ok) throw new Error("Gagal ambil report");
+        const text = await res.text();
+        document.getElementById(elementId).textContent = text;
+      } catch (err) {
+        document.getElementById(elementId).textContent = "Report belum tersedia.";
+      }
+    }
+
+    loadReport("svm_report.txt", "svm-report");
+    loadReport("nb_report.txt", "nb-report");
+  </script>
+</body>
+</html>

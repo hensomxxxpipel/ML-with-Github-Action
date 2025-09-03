@@ -71,3 +71,18 @@ with open(nb_dir / "nb_report.txt", "w", encoding="utf-8") as f:
 
 
 print("Kedua model dan report berhasil diperbarui")
+
+
+# Simpan report ke folder site agar bisa tampil di GitHub Pages
+site_dir = base_dir / "report_site"
+site_dir.mkdir(exist_ok=True)
+
+with open(site_dir / "svm_report.txt", "w", encoding="utf-8") as f:
+    f.write(f"Akurasi: {svm_acc}\n\n")
+    f.write(svm_report)
+
+with open(site_dir / "nb_report.txt", "w", encoding="utf-8") as f:
+    f.write(f"Akurasi: {nb_acc}\n\n")
+    f.write(nb_report)
+
+print("Report tersimpan di report_site/ untuk web.")

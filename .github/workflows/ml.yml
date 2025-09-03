@@ -32,13 +32,18 @@ jobs:
       - name: Run Train models 
         run: |
           python src/train.py
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: report_site  
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
           
-      - name: Commit & push reports/models
-        run: |
-          git config --global user.name "afsra.v.arsipan.7@gmail.com"
-          git config --global user.email "afsravarsipan7"
-          git add .
-          git diff --cached --quiet || git commit -m "Update model reports via GitHub Actions"
-          git branch -M main
-          git push -u origin main
+
 
