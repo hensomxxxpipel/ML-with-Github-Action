@@ -39,7 +39,6 @@ jobs:
           git config --global user.email "afsravarsipan7"
           git add .
           git diff --cached --quiet || git commit -m "Update model reports via GitHub Actions"
-          git remote add origin https://github.com/hensomxxxpipel/ML-with-Github-Action.git
           git branch -M main
           git push -u origin main
 
