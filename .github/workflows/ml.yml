@@ -25,8 +25,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run preprocessing script
+      - name: Run Preprocessing script
         run: |
           python src/preprocessing.py
+
+      - name: Run Train models 
+        run: |
           python src/train.py
+
+      - name: List generated files
+        run: |
+          echo "Files in clean_data:"
+          ls clean_data
+          echo "Files in model/svm:"
+          ls model/svm
+          echo "Files in model/nb:"
+          ls model/nb
           
