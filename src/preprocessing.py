@@ -16,14 +16,7 @@ for col in df.columns:
 
 # path folder untuk data bersih
 clean_dir = base_dir / "clean_data"
-
-# tentukan nama file versi
-version = 1
-while True:
-    clean_path = clean_dir / f"clean_car_evaluation-ver-{version}.csv"
-    if not clean_path.exists():
-        break
-    version += 1
+clean_path = clean_dir / "clean_car_evaluation.csv"
 
 df.to_csv(clean_path, index=False, encoding="utf-8")
 

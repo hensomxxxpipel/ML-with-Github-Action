@@ -9,23 +9,15 @@ import joblib
 
 # path ke data mentah
 base_dir = Path(__file__).parent.parent
-clean_dir = base_dir / "clean_data" 
+clean_path = base_dir / "clean_data" / "clean_car_evaluation.csv"
 
 # ===== Cari file data terbaru =====
-files = list(clean_dir.glob("clean_car_evaluation-ver-*.csv"))
-if not files:
-    raise FileNotFoundError("Tidak ada file clean_car_evaluation-ver-*.csv di folder clean_data")
+if not clean_path.exists():
+    raise FileNotFoundError("File clean_car_evaluation.csv tidak ditemukan di folder clean_data")
 
-# ambil versi terbesar
-def get_version(f):
-    match = re.search(r"ver-(\d+)", f.name)
-    return int(match.group(1)) if match else 0
-
-latest_file = max(files, key=get_version)
-print(f"Menggunakan data terbaru: {latest_file.name}")
 
 # baca dataset
-df = pd.read_csv(latest_file)
+df = pd.read_csv(clean_path)
 
 ## TRAIN
 # pisahkan fitur dan target
@@ -36,15 +28,6 @@ y = df.iloc[:, -1]
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=42, stratify=y
 )
-
-# ===== Helper untuk cek versi =====
-def get_next_version(save_dir: Path, prefix: str):
-    save_dir.mkdir(parents=True, exist_ok=True)
-    existing = list(save_dir.glob(f"{prefix}-ver-*.pkl")) + list(save_dir.glob(f"{prefix}-ver-*.txt"))
-    if not existing:
-        return 1
-    versions = [int(re.search(r"ver-(\d+)", f.name).group(1)) for f in existing if re.search(r"ver-(\d+)", f.name)]
-    return max(versions) + 1
 
 # ========== Training SVM ==========
 svm_model = SVC(kernel="rbf", random_state=42)
@@ -60,10 +43,9 @@ print(svm_report)
 
 # Simpan model dan report svm
 svm_dir = base_dir / "model" / "svm"
-svm_ver = get_next_version(svm_dir, "svm_model")
-joblib.dump(svm_model, svm_dir / f"svm_model-ver-{svm_ver}.pkl")
+joblib.dump(svm_model, svm_dir / "svm_model.pkl")
 
-with open(svm_dir / f"svm_report-ver-{svm_ver}.txt", "w", encoding="utf-8") as f:
+with open(svm_dir / "svm_report.txt", "w", encoding="utf-8") as f:
     f.write(f"Akurasi: {svm_acc}\n\n")
     f.write(svm_report)
 
@@ -81,12 +63,11 @@ print(nb_report)
 
 # Simpan model dan report svm
 nb_dir = base_dir / "model" / "nb"
-nb_ver = get_next_version(nb_dir, "nb_model")
-joblib.dump(nb_model, nb_dir / f"nb_model-ver-{nb_ver}.pkl")
+joblib.dump(nb_model, nb_dir / "nb_model.pkl")
 
-with open(nb_dir / f"nb_report-ver-{nb_ver}.txt", "w", encoding="utf-8") as f:
+with open(nb_dir / "nb_report.txt", "w", encoding="utf-8") as f:
     f.write(f"Akurasi: {nb_acc}\n\n")
     f.write(nb_report)
 
 
-print("Kedua model dan report tersimpan")
+print("Kedua model dan report berhasil diperbarui")
