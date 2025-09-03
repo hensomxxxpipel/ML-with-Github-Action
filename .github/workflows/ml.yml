@@ -22,7 +22,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run preprocessing
-        run: python preprocessing.py
+        run: python src/preprocessing.py
 
       - name: Upload clean_data as artifact
         uses: actions/upload-artifact@v4
@@ -52,7 +52,7 @@ jobs:
           path: clean_data/
 
       - name: Run training
-        run: python train.py
+        run: python src/train.py
 
       - name: Upload report for deploy
         uses: actions/upload-artifact@v4
