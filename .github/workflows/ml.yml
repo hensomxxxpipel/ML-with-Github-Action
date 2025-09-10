@@ -122,4 +122,8 @@ jobs:
       - uses: streamlit/streamlit-app-action@v0.0.3
         with:
           app-path: report_site/app.py
+      
+      - name: Run streamlit
+        run: |
+          streamlit run report_site/app.py
 
