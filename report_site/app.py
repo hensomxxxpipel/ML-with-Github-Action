@@ -3,8 +3,8 @@ from pathlib import Path
 
 # path ke folder model
 base_dir = Path(__file__).parent.parent
-svm_report_path = base_dir / "model" / "svm" / "svm_report.txt"
-nb_report_path = base_dir / "model" / "nb" / "nb_report.txt"
+svm_report_path = base_dir / "report_site" / "svm_report.txt"
+nb_report_path = base_dir / "report_site" / "nb_report.txt"
 
 st.title("Car Evaluation Model Report")
 st.markdown("Tampilan report akurasi dan classification report dari model SVM dan Naive Bayes")
