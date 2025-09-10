@@ -115,9 +115,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      # - name: Install dependencies
-      #   run: |
-      #     pip install -r requirements_streamlit.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements_streamlit.txt
 
       - uses: streamlit/streamlit-app-action@v0.0.3
         with:
