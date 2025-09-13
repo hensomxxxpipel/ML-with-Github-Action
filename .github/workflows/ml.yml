@@ -140,7 +140,7 @@ jobs:
           context: .
           file: src/Dockerfile.preprocessing
           push: true
-          tags: user/preprocessing:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/preprocessing:latest
 
       - name: Build and push training image
         uses: docker/build-push-action@v6
@@ -148,7 +148,7 @@ jobs:
           context: .
           file: src/Dockerfile.train
           push: true
-          tags: user/training:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/training:latest
       
       - name: Build and push streamlit image
         uses: docker/build-push-action@v6
@@ -156,7 +156,7 @@ jobs:
           context: .
           file: report_site/Dockerfile
           push: true
-          tags: user/training:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/streamlit:latest
 
 
       - name: Build and run docker compose
