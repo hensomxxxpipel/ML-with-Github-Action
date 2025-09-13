@@ -134,11 +134,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
-      - name: Build and push
+      - name: Build and push preprocessing image
         uses: docker/build-push-action@v6
         with:
+          context: .
+          file: src/Dockerfile.preprocessing
           push: true
-          tags: user/app:latest
+          tags: user/preprocessing:latest
+
+      - name: Build and push training image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: src/Dockerfile.train
+          push: true
+          tags: user/training:latest
+      
+      - name: Build and push streamlit image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: report_site/Dockerfile
+          push: true
+          tags: user/training:latest
+
 
       - name: Build and run docker compose
         run: |
