@@ -4,7 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 
 # path ke data mentah
 base_dir = Path(__file__).parent.parent
-data_dir = base_dir / "raw_data" / "car_evaluation_full.csv"
+data_dir = base_dir / "raw_data" / "car_evaluation.csv"
 
 df = pd.read_csv(data_dir)
 
