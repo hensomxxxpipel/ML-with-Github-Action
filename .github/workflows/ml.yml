@@ -128,12 +128,12 @@ jobs:
       - name: Build and run docker compose
         run: |
            docker compose up --build
-        timeout-minutes: 4
+        timeout-minutes: 2
 
-      - name: List generated files
-        run: |
-          ls -R clean_data
-          ls -R report_site
+      # - name: List generated files
+      #   run: |
+      #     ls -R clean_data
+      #     ls -R report_site
 
   
   # deploy-streamlit:
