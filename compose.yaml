@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  preprocessing:
+    build:
+      context: .
+      dockerfile: src/Dockerfile.preprocessing
+    command: >
+      bash -c "python src/preprocessing.py"
+    volumes:
+      - ./clean_data:/app/clean_data
+    depends_on: []
+
+  training:
+    build:
+      context: .
+      dockerfile: src/Dockerfile.train
+    command: >
+      bash -c "python src/train.py"
+    volumes:
+      - ./clean_data:/app/clean_data
+      - ./model:/app/model
+      - ./report_site:/app/report_site
+    depends_on:
+      - preprocessing
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: report_site/Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./report_site:/app/report_site
+    depends_on:
+      - training
