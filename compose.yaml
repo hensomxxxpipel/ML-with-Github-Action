@@ -1,54 +1,61 @@
-# version: "3.9"
+# Kode jika langsung test di local
+version: '3.9'
 
-# services:
-#   preprocessing:
-#     build:
-#       context: .
-#       dockerfile: src/Dockerfile.preprocessing
-#     command: >
-#       bash -c "python src/preprocessing.py"
-#     volumes:
-#       - ./clean_data:/app/clean_data
-#     depends_on: []
-
-#   training:
-#     build:
-#       context: .
-#       dockerfile: src/Dockerfile.train
-#     command: >
-#       bash -c "python src/train.py"
-#     volumes:
-#       - ./clean_data:/app/clean_data
-#       - ./model:/app/model
-#       - ./report_site:/app/report_site
-#     depends_on:
-#       - preprocessing
-
-#   streamlit:
-#     build:
-#       context: .
-#       dockerfile: report_site/Dockerfile
-#     ports:
-#       - "8501:8501"
-#     volumes:
-#       - ./report_site:/app/report_site
-#     depends_on:
-#       - training
-
-version: '3'
 services:
   preprocessing:
-    image: adr0rsh/preprocessing:latest
+    image: adr0rsh/preprocessing:v.1
     volumes:
       - ./clean_data:/app/clean_data
+    depends_on: []
 
   training:
-    image: adr0rsh/train:v.1
+    image: adr0rsh/training:v.1
     volumes:
       - ./model:/app/model
       - ./report_site:/app/report_site
+    depends_on:
+      - preprocessing
 
   streamlit:
-    image: adr0rsh/streamlit:latest
+    image: adr0rsh/streamlit:v.1
     ports:
       - "8501:8501"
+    depends_on:
+      - training
+
+## Kode jika menggunakan image yang sudah di push
+version: "3.9"
+
+services:
+  preprocessing:
+    build:
+      context: .
+      dockerfile: src/Dockerfile.preprocessing
+    image: adr0rsh/preprocessing:v.2
+    volumes:
+      - ./clean_data:/app/clean_data
+    depends_on: []
+
+  training:
+    build:
+      context: .
+      dockerfile: src/Dockerfile.train
+    image: adr0rsh/training:v.2
+    volumes:
+      - ./clean_data:/app/clean_data
+      - ./model:/app/model
+      - ./report_site:/app/report_site
+    depends_on:
+      - preprocessing
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: report_site/Dockerfile
+    image: adr0rsh/streamlit:v.2
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./report_site:/app/report_site
+    depends_on:
+      - training

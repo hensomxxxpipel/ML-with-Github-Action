@@ -7,13 +7,10 @@ RUN pip install --no-cache-dir -r /app/requirements_train.txt
 
 COPY src/train.py /app/src/
 
-# Copy isi folder raw_data langsung ke /app/raw_data/
 COPY clean_data/ /app/clean_data/
 
-# Buat folder output untuk clean_data
 RUN mkdir -p /app/model/svm /app/model/nb /app/report_site
 
-# Default command untuk menjalankan preprocessing
 CMD ["python", "/app/src/train.py"]
 
 

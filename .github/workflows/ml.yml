@@ -103,7 +103,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  docker-macos-test:
+  docker-test:
     runs-on: ubuntu-latest
     needs: training
     steps:
