@@ -39,9 +39,14 @@ version: '3'
 services:
   preprocessing:
     image: adr0rsh/preprocessing:latest
+    volumes:
+      - ./clean_data:/app/clean_data
 
   training:
-    image: adr0rsh/training:latest
+    image: adr0rsh/train:v.1
+    volumes:
+      - ./model:/app/model
+      - ./report_site:/app/report_site
 
   streamlit:
     image: adr0rsh/streamlit:latest

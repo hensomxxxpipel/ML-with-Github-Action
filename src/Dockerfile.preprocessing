@@ -2,9 +2,28 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY ../requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-COPY . /app/src
+COPY src/preprocessing.py /app/src/
 
-# CMD ["bash", "-c", "python src/preprocessing.py && python src/train.py"]
+# Copy isi folder raw_data langsung ke /app/raw_data/
+COPY raw_data/ /app/raw_data/
+
+# Buat folder output untuk clean_data
+RUN mkdir -p /app/clean_data
+
+# Default command untuk menjalankan preprocessing
+CMD ["python", "/app/src/preprocessing.py"]
+
+# FROM python:3.12-slim
+
+# WORKDIR /app
+
+# COPY ../requirements.txt .
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# COPY . /app
+
+# # CMD ["bash", "-c", "python src/preprocessing.py"]
+
