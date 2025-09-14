@@ -5,6 +5,3 @@ __pycache__/
 .env
 .git
 .gitignore
-clean_data/
-model/
-report_site/
