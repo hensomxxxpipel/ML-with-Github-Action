@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/399107333098422156/ef4ebe3c4e294a7c8fb784561e954986/artifacts
+end_time: 1758100821007
+entry_point_name: ''
+experiment_id: '399107333098422156'
+lifecycle_stage: active
+run_id: ef4ebe3c4e294a7c8fb784561e954986
+run_name: svm
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758100820803
+status: 4
+tags: []
+user_id: racha

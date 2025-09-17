@@ -1,6 +1,5 @@
 import pandas as pd
 from pathlib import Path
-import re
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.naive_bayes import CategoricalNB
